@@ -1,35 +1,29 @@
 import { initializeApp } from "firebase/app";
-
-import { getDatabase, ref, child, push, update } from "firebase/database";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.API_KEY || "API_KEY_VACIA",
-  authDomain: process.env.AUTH_DOMAIN || "AUTH_DOMAIN_VACIO",
-  projectId: process.env.PROJECT_ID || "PROJECT_ID_VACIO"
+  apiKey: "AIzaSyBmtjotadHjP97mtOU0TuzHPND-uciztQI",
+  authDomain: "chat-f5704.firebaseapp.com",
+  databaseURL: "https://chat-f5704-default-rtdb.firebaseio.com",
+  projectId: "chat-f5704",
+  storageBucket: "chat-f5704.appspot.com",
+  messagingSenderId: "647110579709",
+  appId: "1:647110579709:web:a13383062c95803c26f594"
 };
 
-const app = initializeApp(firebaseConfig);
-
-function writeNewPost(uid, username, picture, title, body) {
-  const db = getDatabase();
-
-  // A post entry.
-  const postData = {
-    author: username,
-    uid,
-    body,
-    title,
-    starCount: 0,
-    authorPic: picture
-  };
-
-  // Get a key for a new Post.
-  const newPostKey = push(child(ref(db), "posts")).key;
-
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  const updates = {};
-  updates["/posts/" + newPostKey] = postData;
-  updates["/user-posts/" + uid + "/" + newPostKey] = postData;
-
-  return update(ref(db), updates);
-}
+const App = initializeApp(firebaseConfig);
+const db = getFirestore();
+const button = document.getElementById("btn");
+button.addEventListener("click", async() => {
+  console.log("Funciona");
+  const Name = document.querySelector(".input-email").value;
+  try {
+    const docRef = await addDoc(collection(db, "users"), {
+      name: Name
+    });
+    window.location.href = "./chat.html";
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+});
