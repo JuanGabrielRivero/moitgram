@@ -28,7 +28,7 @@
   }
   
   .logo {
-    width: 8rem;
+    width: 10rem;
     margin-bottom: 1rem;
     cursor: pointer;
   }
@@ -88,12 +88,12 @@
     margin-top: 2rem;
     margin-bottom: 3rem;
     background-color: var(--violeta);
-    color: var(--black);
+    color: white;
   }
   
   .btn:hover {
     background-color: var(--darkvioleta);
-    color: var(--black);
+    color: white;
     cursor: pointer;
   }
   
